@@ -190,7 +190,7 @@ all_cols   <- c(
   "#7B3294",  # competitive exclusion
   "#C2A5CF",  # almost competitive exclusion
   "#D01C8B",  # priority effect
-  "white"     # fitness = 0
+  "black"     # fitness = 0
 )
 
 present_cols <- intersect(all_cols, unique(outcome.cols[scenario.mat]))
