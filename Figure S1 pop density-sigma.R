@@ -19,6 +19,8 @@ n.EQ1.seq <- sapply(V1.seq, function(V1) {
   (Omega1 / w) * (K1 - g1 * V1)
 })
 
+pdf("FigureS1_density-variance.pdf", width = 6, height = 4)
+
 # Plot
 plot(sigma1.seq, n.EQ1.seq, type = "l", lwd = 2,
      xlab = expression(sigma[1]),
@@ -26,6 +28,7 @@ plot(sigma1.seq, n.EQ1.seq, type = "l", lwd = 2,
      main = "Resident equilibrium density vs variance")
 grid()
 
+dev.off()
 
 
 
