@@ -1,8 +1,6 @@
 # Manuscript Figure 6 
 # coexistence outcomes
 
-# check that these colors are correct
-
 ## -----------------------------------------------------------
 ## 1.  Parameter values (unchanged) ---------------------------
 ## -----------------------------------------------------------
@@ -208,3 +206,7 @@ legend("topright", inset = c(-.61,0),   legend = legend_labs,
   fill   = present_cols, bty = "n", xpd = TRUE, title = "Outcome")
 
 dev.off()
+
+
+# change
+z=1
