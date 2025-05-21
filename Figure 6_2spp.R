@@ -1,6 +1,8 @@
 # Manuscript Figure 6 
 # coexistence outcomes
 
+# check that these colors are correct
+
 ## -----------------------------------------------------------
 ## 1.  Parameter values (unchanged) ---------------------------
 ## -----------------------------------------------------------
