@@ -8,6 +8,7 @@ require(deSolve)
 require(tidyverse)
 require(cowplot)
 require(dplyr)
+require(gridGraphics)
 
 # case 1AA (Persistence), 3EE (Competitive Exclusion), 3DE (Priority Effects)
 
@@ -100,13 +101,13 @@ sol2 <- ode(func=eqs, y=ic, parms=pars, times=time) %>% ## solve ODEs
 
 ## create plot of species densities through time
 densplot <- ggplot() +
-  labs(title = "    Persistence") +
+  labs(title = "   persistence") +
   geom_line(data=sol, aes(x=time, y=n, colour=as.factor(species))) +
   geom_line(data=sol2, aes(x=time, y=n, colour=as.factor(species)), linetype="dashed") +
   scale_y_continuous(name="pop. density", limits=c(0, NA)) +
   scale_colour_manual(values=c("#0072B2", "#E69F00")) +
-  annotate(geom="text", label="", x=0, y=3, fontface="bold") +
-  theme(legend.position="none")
+  annotate(geom="text", label="", x=0, y=2, fontface="bold") +
+  theme(legend.position="none",plot.title = element_text(size = 10))
 
 ## create plot of species traits through time
 traitplot <- ggplot() +
@@ -151,13 +152,13 @@ sol2 <- ode(func=eqs, y=ic, parms=pars, times=time) %>% ## solve ODEs
 
 ## create plot of species densities through time
 densplotPE <- ggplot() +
-  labs(title = "    Priority Effect") +
+  labs(title = "   priority effect") +
   geom_line(data=sol, aes(x=time, y=n, colour=as.factor(species))) +
   geom_line(data=sol2, aes(x=time, y=n, colour=as.factor(species)), linetype="dashed") +
   scale_y_continuous(name="pop. density", limits=c(0, NA)) +
   scale_colour_manual(values=c("#0072B2", "#E69F00")) +
-  annotate(geom="text", label="", x=0, y=3, fontface="bold") +
-  theme(legend.position="none")
+  annotate(geom="text", label="", x=0, y=2, fontface="bold") +
+  theme(legend.position="none",plot.title = element_text(size = 10))
 
 ## create plot of species traits through time
 traitplotPE <- ggplot() +
@@ -206,13 +207,13 @@ sol2 <- ode(func=eqs, y=ic, parms=pars, times=time) %>% ## solve ODEs
 
 ## create plot of species densities through time
 densplotCE <- ggplot() +
-  labs(title = "    Competitive Exclusion") +
+  labs(title = "   competitive exclusion") +
   geom_line(data=sol, aes(x=time, y=n, colour=as.factor(species))) +
   geom_line(data=sol2, aes(x=time, y=n, colour=as.factor(species)), linetype="dashed") +
   scale_y_continuous(name="pop. density", limits=c(0, NA)) +
   scale_colour_manual(values=c("#0072B2", "#E69F00")) +
-  annotate(geom="text", label="", x=0, y=3, fontface="bold") +
-  theme(legend.position="none")
+  annotate(geom="text", label="", x=0, y=2, fontface="bold") +
+  theme(legend.position="none",plot.title = element_text(size = 10))
 
 ## create plot of species traits through time
 traitplotCE <- ggplot() +
@@ -228,15 +229,14 @@ traitplotCE <- ggplot() +
 
 plot_grid(densplotCE, traitplotCE, ncol = 1, nrow = 2) #solid spp1 (blue) invades, dashed spp2 (yellow) invades
 
-combinedPlot1 <- plot_grid(densplot, traitplot, labels = "1AA", ncol = 1)
-combinedPlot2 <- plot_grid(densplotPE, traitplotPE, labels = "3DD", ncol = 1)
-combinedPlot3 <- plot_grid(densplotCE, traitplotCE, labels = "3DE", ncol = 1)
+combinedPlot1 <- plot_grid(densplot, traitplot, ncol = 1)
+combinedPlot2 <- plot_grid(densplotPE, traitplotPE, ncol = 1)
+combinedPlot3 <- plot_grid(densplotCE, traitplotCE, ncol = 1)
 
 # Now, combine all the plots side by side
 finalCombinedPlot <- plot_grid(combinedPlot1, combinedPlot2, combinedPlot3, ncol = 3, align = 'v')
 
 # Export as PDF
-pdf("combined_plots.pdf", width = 10, height = 7)
+pdf("combined_plots.pdf", width = 6, height = 3)
 print(finalCombinedPlot)
 dev.off()
-
