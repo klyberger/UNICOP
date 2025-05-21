@@ -128,7 +128,7 @@ for(ii in 1:n.){
       if(backL.ineq(pars) < K2){                         # ---- CASE I
         z1eq <- zEQ1.function(pars);  z2eq <- zEQ2.function(pars)
         if(!is.na(z1eq) & !is.na(z2eq)){
-          who.1 <- ifelse(fitness.z1(0,   pars) > 0, 1, 0) +
+          who.1 <- ifelse(fitness.z1(0,   pars) > 0, 1, 0) + ## expand to include another nested if else with tolerance for fitness very close to 0 @bradduthie
                    ifelse(fitness.z1(z1eq, pars) > 0, 1, 0)
           who.2 <- ifelse(fitness.z2(0,   pars) > 0, 1, 0) +
                    ifelse(fitness.z2(z2eq, pars) > 0, 1, 0)
@@ -137,7 +137,7 @@ for(ii in 1:n.){
       } else {                                           # ---- CASE II (front<K1)
         z2eq <- zEQ2.function(pars)
         if(!is.na(z2eq)){
-          who.1 <- ifelse(fitness.z1(0,   pars) > 0, 1, 0)
+          who.1 <- ifelse(fitness.z1(0,   pars) > 0, 1, 0) 
           who.2 <- ifelse(fitness.z2(0,   pars) > 0, 1, 0) +
                    ifelse(fitness.z2(z2eq, pars) > 0, 1, 0)
           scenario.mat[ii,jj] <- 9 + which(which.caseII.reverse ==
