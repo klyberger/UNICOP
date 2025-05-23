@@ -64,14 +64,14 @@ for(ii in 1:n.){
       ifelse(
         (K1-sigma1.seq[ii]^2/theta1)/(K2-sigma2.seq[jj]^2/theta2) > sqrt((w^2 + 2*sigma2.seq[jj]^2)/Omega.^2), #typo Omega^2
         "unimodal-persistence", #unimodal, invades at 0
-        "unimodal-no invion" #unimodal, doesn't invade at 0
+        "unimodal-no invasion" #unimodal, doesn't invade at 0
       )
     )
   }
 }
 
 # Define the mapping of categories to numbers
-category_map <- c("bimodal-persistence" = 1, "bimodal-almost persistence" = 2, "bimodal-no invasion" = 3, "unimodal-persistence" = 4, "unimodal-no invion" = 5)
+category_map <- c("bimodal-persistence" = 1, "bimodal-almost persistence" = 2, "bimodal-no invasion" = 3, "unimodal-persistence" = 4, "unimodal-no invasion" = 5)
 
 # Create a numeric version of ineq2
 ineq2_numeric <- matrix(category_map[as.character(ineq2)], nrow = nrow(ineq2))
