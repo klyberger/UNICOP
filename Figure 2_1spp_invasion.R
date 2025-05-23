@@ -57,7 +57,7 @@ for(ii in 1:n.){
         "bimodal-persistence",
         ifelse(
           (K1-sigma1.seq[ii]^2/theta1) > 2*Omega.^2/theta2 * (1-log((2*Omega.^3)/(theta2 *sqrt(w^2 + 2*sigma2.seq[jj]^2)*(K2-sigma2.seq[jj]^2/theta2)))), # invades only at peaks #typo need sqrt for omega_2
-          "bimodal-almost persistence",
+          "bimodal-nearly persistence",
           "bimodal-no invasion" #no invasion
         )
       ),
@@ -71,7 +71,7 @@ for(ii in 1:n.){
 }
 
 # Define the mapping of categories to numbers
-category_map <- c("bimodal-persistence" = 1, "bimodal-almost persistence" = 2, "bimodal-no invasion" = 3, "unimodal-persistence" = 4, "unimodal-no invasion" = 5)
+category_map <- c("bimodal-persistence" = 1, "bimodal-nearly persistence" = 2, "bimodal-no invasion" = 3, "unimodal-persistence" = 4, "unimodal-no invasion" = 5)
 
 # Create a numeric version of ineq2
 ineq2_numeric <- matrix(category_map[as.character(ineq2)], nrow = nrow(ineq2))
