@@ -27,8 +27,10 @@ maxsig1 = sqrt(K1*theta1)
 maxsig2 = sqrt(K2*theta2)
   
 n. <- 100
-sigma1.seq <- seq(0, maxsig1, length.out = n.)
-sigma2.seq <- seq(0, maxsig2, length.out = n.)
+sigma1sq.seq <- seq(0, maxsig1^2, length.out = n.)
+sigma2sq.seq <- seq(0, maxsig2^2, length.out = n.)
+sigma1.seq <- sqrt(sigma1sq.seq)
+sigma2.seq <- sqrt(sigma2sq.seq)
 
 ineq1 <- matrix(NA, ncol = n., nrow = n.)
 
@@ -81,13 +83,13 @@ my.colors <- c("#ff6e00", "#ffaa00", "#ffc800", "#6464ff", "#c8c8ff")
 
 
 ### Figure 2 ####
-pdf(file="1spp_bifurcation_v3.pdf", width=6, height=4.7)
+pdf(file="1spp_bifurcation_V.pdf", width=6, height=4.7)
 
 
 # Create the image
 par(mar = c(5, 4.3, 4, 12))
 #par(mfrow = c(1,1))
-image(sigma1.seq, sigma2.seq, ineq2_numeric, col = my.colors, xlab=expression(V[1]^2), ylab=expression(V[2]^2))
+image(sigma1sq.seq, sigma2sq.seq, ineq2_numeric, col = my.colors, xlab=expression(V[1]), ylab=expression(V[2]))
 
 my.colors <- setNames(
   c("#ff6e00", "#ffaa00", "#ffc800", "#6464ff", "#c8c8ff"),
@@ -143,9 +145,9 @@ r. <- function(z1, pars){
 }
 
 # Add horizontal x-axis label at lower left
-text(x = 1.4, y = 1.9, labels = expression(bar(z)[1]), xpd = NA, cex = .6)
+text(x = 7, y = 2.7, labels = expression(bar(z)[1]), xpd = NA, cex = .6)
 # Add vertical y-axis label (rotated)
-text(x = 1, y = 2.25, labels = "per capita fitness", srt = 90, xpd = NA, cex = .6)
+text(x = 5.8, y = 3.8, labels = "per capita fitness", srt = 90, xpd = NA, cex = .6)
 
 # --- Case A inset (shifted left by 0.05) ---
 par(fig = c(0.2, 0.37, 0.18, 0.38), new = TRUE, mar = c(1, 1, 1, 1))
