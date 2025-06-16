@@ -102,7 +102,7 @@ pars.V1L <- list(w = w, K1 = K1, K2 = K2, sigma1 = 0.5, sigma2 = sigma2, theta1 
 par(mfrow=c(1, 2), mar=c(4,4,2,0), oma=c(1,1,1,1))
 pdf(file="Fitness_2_panel.pdf", width=5.5, height=3.5)
 layout(matrix(c(1, 1, 1, 2, 2), ncol=5, byrow=TRUE))
-plot(z1.,r.(z1 = z1., pars.KH), type = 'l', xlab="invader trait", ylab="fitness", ylim=c(-3,5))
+plot(z1.,r.(z1 = z1., pars.KH), type = 'l', xlab=expression(bar(z)[1]), ylab="per capita fitness", ylim=c(-3,5))
 lines(z1.,r.(z1 = z1., pars.KL), type = 'l',lty ="dashed")
 legend(x=4, y=5.5, legend=c(expression(paste(K[1], " = 5")), expression(paste(K[1], " = 0.55")),"g = 1", "g = 0.1",expression(paste(V[1], " = 36")), expression(paste(V[1], " = 0.25"))), col=c("black", "black","blue", "blue", "red", "red"), lty=c(1,2), bty="n",seg.len=1, y.intersp=1, x.intersp=0.75)
 lines(z1.,r.(z1 = z1., pars.gH), type = 'l', col="blue")

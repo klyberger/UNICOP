@@ -35,7 +35,7 @@ ineq1 <- matrix(NA, ncol = n., nrow = n.)
 for(ii in 1:n.){
 	for(jj in 1:n.){
 	  Omega. <- sqrt(w^2 + sigma1.seq[ii]^2 + sigma2.seq[jj]^2)
-		ineq1[ii, jj] <- ifelse((K2-sigma2.seq[jj]^2/theta2) > (2*Omega.^3)/(theta2 *sqrt(w^2 + 2*sigma2.seq[jj]^2)), 2, 1) #typo need sqrt for omega_2
+		ineq1[ii, jj] <- ifelse((K2-sigma2.seq[jj]^2/theta2) > (2*Omega.^3)/(theta2 *sqrt(w^2 + 2*sigma2.seq[jj]^2)), 2, 1) 
 	}
 }
 
@@ -51,19 +51,19 @@ for(ii in 1:n.){
   for(jj in 1:n.){
     Omega. <- sqrt(w^2 + sigma1.seq[ii]^2 + sigma2.seq[jj]^2)
     ineq2[ii, jj] <- ifelse(
-      (K2-sigma2.seq[jj]^2/theta2) > (2*Omega.^3)/(theta2 *sqrt(w^2 + 2*sigma2.seq[jj]^2)),#bimodal #typo need sqrt for omega_2
+      (K2-sigma2.seq[jj]^2/theta2) > (2*Omega.^3)/(theta2 *sqrt(w^2 + 2*sigma2.seq[jj]^2)),#bimodal 
       ifelse(
-        (K1-sigma1.seq[ii]^2/theta1)/(K2-sigma2.seq[jj]^2/theta2) > sqrt((w^2 + 2*sigma2.seq[jj]^2)/Omega.^2),#invades at all eq. #typo Omega^2
-        "bimodal-persistence",
+        (K1-sigma1.seq[ii]^2/theta1)/(K2-sigma2.seq[jj]^2/theta2) > sqrt((w^2 + 2*sigma2.seq[jj]^2)/Omega.^2),#invades at all eq.
+        "bimodal-invades",
         ifelse(
-          (K1-sigma1.seq[ii]^2/theta1) > 2*Omega.^2/theta2 * (1-log((2*Omega.^3)/(theta2 *sqrt(w^2 + 2*sigma2.seq[jj]^2)*(K2-sigma2.seq[jj]^2/theta2)))), # invades only at peaks #typo need sqrt for omega_2
-          "bimodal-nearly persistence",
+          (K1-sigma1.seq[ii]^2/theta1) > 2*Omega.^2/theta2 * (1-log((2*Omega.^3)/(theta2 *sqrt(w^2 + 2*sigma2.seq[jj]^2)*(K2-sigma2.seq[jj]^2/theta2)))), # invades only at peaks 
+          "bimodal-invades at peaks",
           "bimodal-no invasion" #no invasion
         )
       ),
       ifelse(
-        (K1-sigma1.seq[ii]^2/theta1)/(K2-sigma2.seq[jj]^2/theta2) > sqrt((w^2 + 2*sigma2.seq[jj]^2)/Omega.^2), #typo Omega^2
-        "unimodal-persistence", #unimodal, invades at 0
+        (K1-sigma1.seq[ii]^2/theta1)/(K2-sigma2.seq[jj]^2/theta2) > sqrt((w^2 + 2*sigma2.seq[jj]^2)/Omega.^2), 
+        "unimodal-invades", #unimodal, invades at 0
         "unimodal-no invasion" #unimodal, doesn't invade at 0
       )
     )
@@ -71,7 +71,7 @@ for(ii in 1:n.){
 }
 
 # Define the mapping of categories to numbers
-category_map <- c("bimodal-persistence" = 1, "bimodal-nearly persistence" = 2, "bimodal-no invasion" = 3, "unimodal-persistence" = 4, "unimodal-no invasion" = 5)
+category_map <- c("bimodal-invades" = 1, "bimodal-invades at peaks" = 2, "bimodal-no invasion" = 3, "unimodal-invades" = 4, "unimodal-no invasion" = 5)
 
 # Create a numeric version of ineq2
 ineq2_numeric <- matrix(category_map[as.character(ineq2)], nrow = nrow(ineq2))
@@ -142,6 +142,11 @@ r. <- function(z1, pars){
     return(out.)
 }
 
+# Add horizontal x-axis label at lower left
+text(x = 1.4, y = 1.9, labels = expression(bar(z)[1]), xpd = NA, cex = .6)
+# Add vertical y-axis label (rotated)
+text(x = 1, y = 2.25, labels = "per capita fitness", srt = 90, xpd = NA, cex = .6)
+
 # --- Case A inset (shifted left by 0.05) ---
 par(fig = c(0.2, 0.37, 0.18, 0.38), new = TRUE, mar = c(1, 1, 1, 1))
 pars <- modifyList(pars_base, list(sigma1 = sigma1_vec[1], sigma2 = sigma2_vec[1]))
@@ -157,7 +162,7 @@ abline(h=0, lty=2)
 # --- Case D inset ---
 par(fig = c(0.28, 0.45, 0.60, 0.80), new = TRUE, mar = c(1, 1, 1, 1))
 pars <- modifyList(pars_base, list(sigma1 = sigma1_vec[4], sigma2 = sigma2_vec[4]))
-plot(z1., r.(z1., pars), type='l', xaxt='n', yaxt='n', xlab='', ylab='', ylim=c(-0.4,0.2))
+plot(z1., r.(z1., pars), type='l', xaxt='n', yaxt='n', xlab='', ylab='', ylim=c(-0.4,0.2)) 
 abline(h=0, lty=2)
 
 # --- Case E inset ---
@@ -168,3 +173,4 @@ abline(h=0, lty=2)
 
 
 dev.off()
+
