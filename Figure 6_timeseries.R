@@ -240,3 +240,135 @@ finalCombinedPlot <- plot_grid(combinedPlot1, combinedPlot2, combinedPlot3, ncol
 pdf("combined_plots.pdf", width = 6, height = 3)
 print(finalCombinedPlot)
 dev.off()
+
+
+# dynamics in the light green space
+sigma1 = 0.2842
+sigma2 = 1.2712
+
+n.EQ1 <- sqrt(1 + 2*sigma1^2/w^2)*(K2 - (1/theta1)*sigma1^2)
+n.EQ2 <- sqrt(1 + 2*sigma2^2/w^2)*(K2 - (1/theta2)*sigma2^2)
+
+tmax <- 650 ## time to integrate equations for
+stepout <- tmax/250 ## time step size for output
+time <- seq(0, tmax, by=stepout) ## sampling points in time
+
+ninit <- c(0.01,n.EQ2) ## initial densities 
+muinit <- c(2,0) ## initial trait means 
+ic <- c(ninit, muinit) ## initial conditions coerced into a vector
+
+pars <- list(w = w, K1 = K1, K2 = K2, sigma1 = sigma1, sigma2 = sigma2, theta1 = theta1, theta2 = theta2)
+
+sol <- ode(func=eqs, y=ic, parms=pars, times=time) %>% ## solve ODEs
+  organize_results(pars) ## put results in tidy table
+
+ninit <- c(n.EQ1, 0.01) ## initial densities 
+muinit <- c(0,2) ## initial trait means 
+ic <- c(ninit, muinit) ## initial conditions coerced into a vector
+
+sol2 <- ode(func=eqs, y=ic, parms=pars, times=time) %>% ## solve ODEs
+  organize_results(pars) ## put results in tidy table
+
+## create plot of species densities through time
+densplotGreen <- ggplot() +
+  labs(title = "   Almost persistence") +
+  geom_line(data=sol, aes(x=time, y=n, colour=as.factor(species))) +
+  geom_line(data=sol2, aes(x=time, y=n, colour=as.factor(species)), linetype="dashed") +
+  scale_y_continuous(name="pop. density", limits=c(0, NA)) +
+  scale_colour_manual(values=c("#0072B2", "#E69F00")) +
+  annotate(geom="text", label="", x=0, y=2, fontface="bold") +
+  theme(legend.position="none",plot.title = element_text(size = 10))
+
+## create plot of species traits through time
+traitplotGreen <- ggplot() +
+  # geom_ribbon(data = sol, aes(x=time, ymin=m-sigma1, ymax=m+sigma1,
+  #                 fill=as.factor(species)), alpha=0.15) +
+  geom_line(data = sol, aes(x=time, y=m, colour=as.factor(species))) +
+  geom_line(data = sol2, aes(x=time, y=m, colour=as.factor(species)),linetype="dashed") +
+  ylab("trait value") +
+  scale_colour_manual(values=c("#0072B2", "#E69F00")) +
+  scale_fill_manual(values=c("#0072B2", "#E69F00")) +
+  annotate(geom="text", label="", x=0, y=0.70, fontface="bold") +
+  theme(legend.position="none")
+
+triangle <- plot_grid(densplotGreen, traitplotGreen, ncol = 1, nrow = 2) #solid spp1 (blue) invades, dashed spp2 (yellow) invades
+
+# Export as PDF
+pdf("small_triangle.pdf", width = 3, height = 3)
+print(triangle)
+dev.off()
+
+
+# dynamics of bimodal-invades at peaks region of figure 2
+sigma1 = 0.7071068 #V1 = 0.5
+sigma2 = 1 #V2 = 1
+
+n.EQ2 <- sqrt(1 + 2 * sigma2^2 / w^2) * (K2 - (1 / theta2) * sigma2^2)
+
+tmax <- 650
+stepout <- tmax / 250
+time <- seq(0, tmax, by = stepout)
+
+pars <- list(w = w, K1 = K1, K2 = K2,
+             sigma1 = sigma1, sigma2 = sigma2,
+             theta1 = theta1, theta2 = theta2)
+
+### --- Simulation 1: mu1 = 0 ---
+ninit1 <- c(0.01, n.EQ2)
+muinit1 <- c(0, 0)
+ic1 <- c(ninit1, muinit1)
+
+sol1 <- ode(func = eqs, y = ic1, parms = pars, times = time) %>%
+  organize_results(pars)
+
+# DENSITY PLOT for mu1 = 0
+densplot1 <- ggplot(sol1, aes(x = time, y = n, color = as.factor(species))) +
+  geom_line(size = 0.9) +
+  scale_y_continuous(name = "pop. density", limits = c(0, NA)) +
+  scale_colour_manual(values = c("#0072B2", "#E69F00")) +
+  theme(legend.position = "none") +
+  labs(title = "mu1 = 0")
+
+# TRAIT PLOT for mu1 = 0
+traitplot1 <- ggplot(sol1, aes(x = time, y = m, color = as.factor(species))) +
+  geom_line(size = 0.9) +
+  ylab("trait value") +
+  scale_colour_manual(values = c("#0072B2", "#E69F00")) +
+  theme(legend.position = "none")
+
+# COMBINED PLOT for mu1 = 0
+plot1 <- plot_grid(densplot1, traitplot1, ncol = 1, align = "v")
+
+### --- Simulation 2: mu1 = 0.1 ---
+ninit2 <- c(0.01, n.EQ2)
+muinit2 <- c(0.1, 0)
+ic2 <- c(ninit2, muinit2)
+
+sol2 <- ode(func = eqs, y = ic2, parms = pars, times = time) %>%
+  organize_results(pars)
+
+# DENSITY PLOT for mu1 = 0.1
+densplot2 <- ggplot(sol2, aes(x = time, y = n, color = as.factor(species))) +
+  geom_line(size = 0.9) +
+  scale_y_continuous(name = "pop. density", limits = c(0, NA)) +
+  scale_colour_manual(values = c("#0072B2", "#E69F00")) +
+  theme(legend.position = "none") +
+  labs(title = "mu1 = 0.1")
+
+# TRAIT PLOT for mu1 = 0.1
+traitplot2 <- ggplot(sol2, aes(x = time, y = m, color = as.factor(species))) +
+  geom_line(size = 0.9) +
+  ylab("trait value") +
+  scale_colour_manual(values = c("#0072B2", "#E69F00")) +
+  theme(legend.position = "none")
+
+# COMBINED PLOT for mu1 = 0.1
+plot2 <- plot_grid(densplot2, traitplot2, ncol = 1, align = "v")
+
+# Combine side by side
+peaks <- plot_grid(plot1, plot2, ncol = 2, rel_widths = c(1, 1))
+
+# Export as PDF
+pdf("Invades_peaks.pdf", width = 3, height = 3)
+print(peaks)
+dev.off()

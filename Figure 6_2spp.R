@@ -132,8 +132,10 @@ dbg <- function(ii, jj, what, val) {
 n.         <- 100
 maxsig1    <- sqrt(K1 * theta1)
 maxsig2    <- sqrt(K2 * theta2)
-sigma1.seq <- seq(0, maxsig1, length.out = n.)
-sigma2.seq <- seq(0, maxsig2, length.out = n.)
+sigma1sq.seq <- seq(0, maxsig1^2, length.out = n.)
+sigma2sq.seq <- seq(0, maxsig2^2, length.out = n.)
+sigma1.seq <- sqrt(sigma1sq.seq)
+sigma2.seq <- sqrt(sigma2sq.seq)
 scenario.mat <- matrix(NA_integer_, nrow = n., ncol = n.)
 
 which.caseI          <- c("22","21","20","12","11","10","02","01","00")  # offset 0
@@ -276,8 +278,9 @@ breaks <- seq(0.5, 20.5, by = 1)
 pdf("2spp_bifurcation_outcome_col_v3.pdf", width=6, height=5)
 
 par(mfrow = c(1, 1), mar   = c(5, 4, 4, 10))
-image(sigma1.seq, sigma2.seq, scenario.mat, col = outcome.cols,
-      xlab = expression(sigma[1]), ylab = expression(sigma[2]),breaks=breaks)
+image(sigma1sq.seq, sigma2sq.seq, scenario.mat, col = outcome.cols,
+      xlab = expression(V[1]), ylab = expression(V[2]),breaks=breaks)
+points(1, 1, pch = 19, col = "black", cex = 1)
 legend("topright", inset = c(-.61,0),   legend = legend_labs,
   fill   = present_cols, bty = "n", xpd = TRUE, title = "Outcome")
 
