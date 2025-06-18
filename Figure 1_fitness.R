@@ -100,22 +100,39 @@ pars.V1L <- list(w = w, K1 = K1, K2 = K2, sigma1 = sqrt(0.1), sigma2 = sigma2, t
 
 ### create figure ####
 par(mfrow=c(1, 2), mar=c(4,4,2,0), oma=c(1,1,1,1))
-pdf(file="Fitness_2_panel.pdf", width=5.5, height=3.25)
+pdf(file="Fitness_2_panel.pdf", width=5.4, height=3.2) 
 layout(matrix(c(1, 1, 1, 1, 2, 2, 2), ncol = 7, byrow = TRUE))
-plot(z1.,r.(z1 = z1., pars.KH), type = 'l', xlab=expression(bar(z)[1]), ylab="per capita fitness", ylim=c(-3,5))
-lines(z1.,r.(z1 = z1., pars.KL), type = 'l',lty ="dashed")
-legend(x=4, y=5.5, legend=c(expression(paste(K[1], " = 5")), expression(paste(K[1], " = 0.5")),"g = 1", "g = 0.1",expression(paste(V[1], " = 6")), expression(paste(V[1], " = 0.1"))), col=c("black", "black","blue", "blue", "red", "red"), lty=c(1,2), bty="n",seg.len=1, y.intersp=1, x.intersp=0.75)
-lines(z1.,r.(z1 = z1., pars.gH), type = 'l', col="blue")
-lines(z1.,r.(z1 = z1., pars.gL), type = 'l', lty ="dashed", col="blue")
-lines(z1.,r.(z1 = z1., pars.VH), type = 'l', col = "red")
-lines(z1.,r.(z1 = z1., pars.VL), type = 'l', lty ="dashed", col="red")
 
-#alpha panel
-plot(z1.,a.(z1 = z1., pars.wH), type = 'l', xlab=expression(paste(Delta, "z")), ylab=expression(paste("competition ", alpha[12])), ylim=c(0,1.05), col="dark green")
-lines(z1.,a.(z1 = z1., pars.V1H), type = 'l', ylab="", ylim=c(0,1),col="red")
-lines(z1.,a.(z1 = z1., pars.V1L), type = 'l',col="red", lty = "dashed")
-lines(z1.,a.(z1 = z1., pars.wL), type = 'l',col="dark green", lty="dashed")
-legend(x=1, y=1.12, legend=c(expression(paste(omega," = 5")), expression(paste(omega," = 1")), expression(paste(V[1], " = 6")), expression(paste(V[1], " = 0.1"))), col=c("dark green", "dark green","red", "red"), lty=c(1,2), bty="n",seg.len=1, y.intersp=1, x.intersp=0.75)
+# Fitness panel
+plot(z1., r.(z1 = z1., pars.KH), type = 'l', xlab=expression(bar(z)[1]), 
+     ylab="per capita fitness", ylim=c(-3,5), lwd=1.5)
+mtext("(a)", side = 3, line = 0.2, adj = -0.25) 
+lines(z1., r.(z1 = z1., pars.KL), type = 'l', lty ="dashed", lwd=1.5)
+lines(z1., r.(z1 = z1., pars.gH), type = 'l', col="blue", lwd=1.5)
+lines(z1., r.(z1 = z1., pars.gL), type = 'l', lty ="dashed", col="blue", lwd=1.5)
+lines(z1., r.(z1 = z1., pars.VH), type = 'l', col = "red", lwd=1.5)
+lines(z1., r.(z1 = z1., pars.VL), type = 'l', lty ="dashed", col="red", lwd=1.5)
+
+legend(x=4, y=5.5, 
+       legend=c(expression(paste(K[1], " = 5")), expression(paste(K[1], " = 0.5")),
+                "g = 1", "g = 0.1", expression(paste(V[1], " = 6")), expression(paste(V[1], " = 0.1"))), 
+       col=c("black", "black", "blue", "blue", "red", "red"), 
+       lty=c(1,2,1,2,1,2), bty="n", seg.len=1.5, y.intersp=1, x.intersp=0.75, lwd=1.5, cex=0.9)
+
+# Alpha panel
+plot(z1., a.(z1 = z1., pars.wH), type = 'l', xlab=expression(paste(Delta, "z")), 
+     ylab=expression(paste("competition ", alpha[12])), ylim=c(0,1.05),
+     col="dark green", lwd=1.5)
+mtext("(b)", side = 3, line = 0.2, adj = -0.4)
+lines(z1., a.(z1 = z1., pars.V1H), type = 'l', col="red", lwd=1.5)
+lines(z1., a.(z1 = z1., pars.V1L), type = 'l', col="red", lty="dashed", lwd=1.5)
+lines(z1., a.(z1 = z1., pars.wL), type = 'l', col="dark green", lty="dashed", lwd=1.5)
+
+legend(x=1, y=1.12, 
+       legend=c(expression(paste(omega," = 5")), expression(paste(omega," = 1")), 
+                expression(paste(V[1], " = 6")), expression(paste(V[1], " = 0.1"))), 
+       col=c("dark green", "dark green", "red", "red"), 
+       lty=c(1,2,1,2), bty="n", seg.len=1.5, y.intersp=1, x.intersp=0.75, lwd=1.5, cex=0.9)
 
 dev.off()
 

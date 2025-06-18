@@ -23,8 +23,10 @@ if(K2 < sigma2^2/theta2) print("error sp2")
 ## ---------------------------------------------------------------------
 
 #max sigma^2 should be K*theta
-maxsig1 = sqrt(K1*theta1)
-maxsig2 = sqrt(K2*theta2)
+#maxsig1 = sqrt(K1*theta1)
+#maxsig2 = sqrt(K2*theta2)
+maxsig1 = sqrt(5)
+maxsig2 = sqrt(5)
   
 n. <- 100
 sigma1sq.seq <- seq(0, maxsig1^2, length.out = n.)
@@ -158,6 +160,12 @@ abline(h=0, lty=2)
 # --- Case B inset ---
 par(fig = c(0.12, 0.29, 0.32, 0.52), new = TRUE, mar = c(1, 1, 1, 1))
 pars <- modifyList(pars_base, list(sigma1 = sigma1_vec[2], sigma2 = sigma2_vec[2]))
+plot(z1., r.(z1., pars), type='l', xaxt='n', yaxt='n', xlab='', ylab='', ylim=c(-0.4,0.2))
+abline(h=0, lty=2)
+
+# --- Case C inset ---
+par(fig = c(0.6, 0.77, 0.32, 0.52), new = TRUE, mar = c(1, 1, 1, 1))
+pars <- modifyList(pars_base, list(sigma1 = sigma1_vec[2], sigma2 = sigma2_vec[2], K1= 0.8))
 plot(z1., r.(z1., pars), type='l', xaxt='n', yaxt='n', xlab='', ylab='', ylim=c(-0.4,0.2))
 abline(h=0, lty=2)
 

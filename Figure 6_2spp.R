@@ -129,9 +129,12 @@ dbg <- function(ii, jj, what, val) {
     }
   }
 }
+
 n.         <- 100
-maxsig1    <- sqrt(K1 * theta1)
-maxsig2    <- sqrt(K2 * theta2)
+#maxsig1    <- sqrt(K1 * theta1)
+#maxsig2    <- sqrt(K2 * theta2)
+maxsig1 = sqrt(5)
+maxsig2 = sqrt(5)
 sigma1sq.seq <- seq(0, maxsig1^2, length.out = n.)
 sigma2sq.seq <- seq(0, maxsig2^2, length.out = n.)
 sigma1.seq <- sqrt(sigma1sq.seq)
