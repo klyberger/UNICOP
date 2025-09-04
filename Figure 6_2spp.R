@@ -1,9 +1,11 @@
-# Manuscript Figure 6 
+# Manuscript Figure 4 panel (a)
 # coexistence outcomes
 
 ## -----------------------------------------------------------
 ## 1.  Parameter values (unchanged) ---------------------------
 ## -----------------------------------------------------------
+## Change the K1 and K2 values to get the different panels of Figure S3
+## See Figure S3 for respective values
 w       <- 1
 theta1  <- 8
 theta2  <- 8
@@ -100,14 +102,11 @@ zEQ2.function <- function(pars){
 }
 
 ## -----------------------------------------------------------
-## 0.   Numerical helper -------------------------------------
+##    Numerical helper -------------------------------------
 ## -----------------------------------------------------------
 tol           <- 1e-8                     # <<–  adjust once here
 is_pos <- function(x, eps = tol) ifelse(is.na(x), 0L, ifelse(x > eps, 1L, 0L))
 
-## -----------------------------------------------------------
-## 3.  Create sigma grids and classify scenarios -------------
-## -----------------------------------------------------------
 ## -----------------------------------------------------------
 ## 3.  Create sigma grids and classify scenarios -------------
 ## -----------------------------------------------------------

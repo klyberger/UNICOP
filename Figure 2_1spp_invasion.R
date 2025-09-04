@@ -113,6 +113,8 @@ legend(x = "topright",inset  = c(-0.9, 0),legend = present,fill   = my.colors[pr
 ## ---------------------------------------------------------------------
 # set up cases A, B, C, D, E
 ## Setting the parameters
+## Change the K1 and K2 values to get the different panels of Figure S2
+## See Figure S2 for respective values
 w <- 1 ## competition width
 theta1 <- 8 ## width of intrinsic growth function = 1/g
 theta2 <- 8
