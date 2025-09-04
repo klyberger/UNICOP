@@ -1,4 +1,4 @@
-# Manuscript figure 2
+# Manuscript Figure 2
 
 # Variance figure single invader
 # 1 is invader
@@ -8,10 +8,10 @@
 w <- 1 ## competition width
 theta1 <- 8 ## width of intrinsic growth function = 1/g
 theta2 <- 8
-K1 <- 1 ## vector of intrinsic growth potentials #1.7 for all scenarios
-K2 <- 1  #2 for all scenarios
+K1 <- 0.79 ## vector of intrinsic growth potentials #1.7 for all scenarios
+K2 <- 0.8  #2 for all scenarios
 sigma1 <- 2.5 ## vector of species trait standard deviations
-sigma2 <- 2.4
+sigma2 <- 2.5
 
 #check existence in 1 species
 if(K1 < sigma1^2/theta1) print("error sp1")
@@ -85,7 +85,7 @@ my.colors <- c("#ff6e00", "#ffaa00", "#ffc800", "#6464ff", "#c8c8ff")
 
 
 ### Figure 2 ####
-pdf(file="1spp_bifurcation_V.pdf", width=6, height=4.7)
+#pdf(file="1spp_bifurcation_V.pdf", width=6, height=4.7)
 
 
 # Create the image
@@ -109,11 +109,18 @@ legend(x = "topright",inset  = c(-0.9, 0),legend = present,fill   = my.colors[pr
 
 
 ## ---------------------------------------------------------------------
-## Example fitness functions to overlay
+## Example fitness functions for panel (a)
 ## ---------------------------------------------------------------------
-# set up cases A, B, D, lowerright_D, E (no case C found yet)
-sigma1_vec <- c(1, 0.1, 1.5, 1.5, 2.3)
-sigma2_vec <- c(0.1, 1, 0.5, 2, 0.1)
+# set up cases A, B, C, D, E
+## Setting the parameters
+w <- 1 ## competition width
+theta1 <- 8 ## width of intrinsic growth function = 1/g
+theta2 <- 8
+K1 <- 0.79 ## vector of intrinsic growth potentials 
+K2 <- 0.8 
+
+sigma1_vec <- c(1, 0.1, 0.8, 1.5, 2.3)
+sigma2_vec <- c(0.1, 1, 0.9, 2, 0.1)
 
 z1. <- seq(-3, 3, by = 0.1)
 
@@ -146,41 +153,36 @@ r. <- function(z1, pars){
     return(out.)
 }
 
-# Add horizontal x-axis label at lower left
-text(x = 7, y = 2.7, labels = expression(bar(z)[1]), xpd = NA, cex = .6)
-# Add vertical y-axis label (rotated)
-text(x = 5.8, y = 3.8, labels = "per capita fitness", srt = 90, xpd = NA, cex = .6)
-
-# --- Case A inset (shifted left by 0.05) ---
-par(fig = c(0.2, 0.37, 0.18, 0.38), new = TRUE, mar = c(1, 1, 1, 1))
+# --- Case A inset ---
+#par(fig = c(0.2, 0.37, 0.18, 0.38), new = TRUE, mar = c(1, 1, 1, 1))
 pars <- modifyList(pars_base, list(sigma1 = sigma1_vec[1], sigma2 = sigma2_vec[1]))
 plot(z1., r.(z1., pars), type='l', xaxt='n', yaxt='n', xlab='', ylab='', ylim=c(-0.4,0.2))
 abline(h=0, lty=2)
 
 # --- Case B inset ---
-par(fig = c(0.12, 0.29, 0.32, 0.52), new = TRUE, mar = c(1, 1, 1, 1))
+#par(fig = c(0.12, 0.29, 0.32, 0.52), new = TRUE, mar = c(1, 1, 1, 1))
 pars <- modifyList(pars_base, list(sigma1 = sigma1_vec[2], sigma2 = sigma2_vec[2]))
 plot(z1., r.(z1., pars), type='l', xaxt='n', yaxt='n', xlab='', ylab='', ylim=c(-0.4,0.2))
 abline(h=0, lty=2)
 
 # --- Case C inset ---
-par(fig = c(0.6, 0.77, 0.32, 0.52), new = TRUE, mar = c(1, 1, 1, 1))
-pars <- modifyList(pars_base, list(sigma1 = sigma1_vec[2], sigma2 = sigma2_vec[2], K1= 0.8))
+#par(fig = c(0.6, 0.77, 0.32, 0.52), new = TRUE, mar = c(1, 1, 1, 1))
+pars <- modifyList(pars_base, list(sigma1 = sigma1_vec[3], sigma2 = sigma2_vec[3]))
 plot(z1., r.(z1., pars), type='l', xaxt='n', yaxt='n', xlab='', ylab='', ylim=c(-0.4,0.2))
 abline(h=0, lty=2)
 
 # --- Case D inset ---
-par(fig = c(0.28, 0.45, 0.60, 0.80), new = TRUE, mar = c(1, 1, 1, 1))
+#par(fig = c(0.28, 0.45, 0.60, 0.80), new = TRUE, mar = c(1, 1, 1, 1))
 pars <- modifyList(pars_base, list(sigma1 = sigma1_vec[4], sigma2 = sigma2_vec[4]))
 plot(z1., r.(z1., pars), type='l', xaxt='n', yaxt='n', xlab='', ylab='', ylim=c(-0.4,0.2)) 
 abline(h=0, lty=2)
 
 # --- Case E inset ---
-par(fig = c(0.45, 0.62, 0.40, 0.60), new = TRUE, mar = c(1, 1, 1, 1))
+#par(fig = c(0.45, 0.62, 0.40, 0.60), new = TRUE, mar = c(1, 1, 1, 1))
 pars <- modifyList(pars_base, list(sigma1 = sigma1_vec[5], sigma2 = sigma2_vec[5]))
 plot(z1., r.(z1., pars), type='l', xaxt='n', yaxt='n', xlab='', ylab='', ylim=c(-0.4,0.2))
 abline(h=0, lty=2)
 
 
-dev.off()
+#dev.off()
 
